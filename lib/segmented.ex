@@ -1,9 +1,9 @@
-defmodule SieveOfErathosthenes.Segmented do
+defmodule SieveOfEratosthenes.Segmented do
   @moduledoc """
   Functions for generating prime numbers up to a given limit n using the segmented sieve of Eratosthenes method.
   """
 
-  alias SieveOfErathosthenes.Regular, as: SieveOfErathosthenes
+  alias SieveOfEratosthenes.Regular, as: SieveOfEratosthenes
 
   @one_hour 3_600_000
 
@@ -13,7 +13,7 @@ defmodule SieveOfErathosthenes.Segmented do
   @spec primes(integer) :: [integer]
   def primes(n) do
     seg_size = segment_size(n)
-    first_segment = SieveOfErathosthenes.primes(seg_size)
+    first_segment = SieveOfEratosthenes.primes(seg_size)
 
     Enum.map(segments(n, seg_size), fn [min, max] -> Task.async(fn -> swept_segment(min, max, first_segment) end) end)
     |> Enum.reduce(first_segment, fn (task, acc) -> acc ++ Task.await(task, @one_hour) end)

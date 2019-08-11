@@ -1,4 +1,4 @@
-defmodule SieveOfErathosthenes.Regular do
+defmodule SieveOfEratosthenes.Regular do
 	@moduledoc """
 	Functions for generating prime numbers up to a given limit n using the sieve of Eratosthenes method.
 	"""

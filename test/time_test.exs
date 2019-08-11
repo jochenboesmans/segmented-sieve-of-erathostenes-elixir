@@ -4,8 +4,8 @@ defmodule SieveOfEratosthenes.TimeTest do
 	"""
 	use ExUnit.Case, async: true
 
-	alias SieveOfErathosthenes.Regular
-	alias SieveOfErathosthenes.Segmented
+	alias SieveOfEratosthenes.Regular
+	alias SieveOfEratosthenes.Segmented
 
 	test("Segmented sieve is faster than regular for high limits") do
 		n = 10_000
