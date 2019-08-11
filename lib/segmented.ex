@@ -13,10 +13,13 @@ defmodule SieveOfEratosthenes.Segmented do
   @spec primes(integer) :: [integer]
   def primes(n) do
     seg_size = segment_size(n)
-    first_segment = SieveOfEratosthenes.primes(seg_size)
+    base = SieveOfEratosthenes.primes(seg_size)
 
-    Enum.map(segments(n, seg_size), fn [min, max] -> Task.async(fn -> swept_segment(min, max, first_segment) end) end)
-    |> Enum.reduce(first_segment, fn (task, acc) -> acc ++ Task.await(task, @one_hour) end)
+    Enum.map(segments(n, seg_size), fn [min, max] ->
+      Task.async(fn -> swept_segment(min, max, base) end) end)
+
+    |> Enum.reduce(base, fn (task, acc) ->
+      acc ++ Task.await(task, @one_hour) end)
   end
 
   @spec segment_size(integer) :: integer
@@ -29,12 +32,11 @@ defmodule SieveOfEratosthenes.Segmented do
   end
 
   @spec swept_segment(integer, integer, [integer]) :: [integer]
-  defp swept_segment(min, max, first_segment_primes) do
-    :lists.seq(min, max)
+  defp swept_segment(min, max, base) do
+    # filter out any number that's a multiple of one or more integers from base
+    SieveOfEratosthenes.potential_primes(min, max)
     |> Enum.filter(fn p ->
-      Enum.all?(first_segment_primes, fn i ->
-        rem(p, i) !== 0
+        Enum.all?(base, fn i -> rem(p, i) !== 0 end)
       end)
-    end)
   end
 end

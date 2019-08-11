@@ -9,10 +9,16 @@ defmodule SieveOfEratosthenes.Regular do
 	Returns a list of all prime numbers up to a given limit n.
 	"""
 	@spec primes(integer) :: [integer]
-	def primes(n), do: sweep(potential_primes(n), @first_prime, n)
+	def primes(n) do
+		sweep([@first_prime | potential_primes(@first_prime, n)], @first_prime, n)
+	end
 
-	@spec potential_primes(integer) :: [integer]
-	defp potential_primes(n), do: :lists.seq(@first_prime, n)
+	@spec potential_primes(integer, integer) :: [integer]
+	def potential_primes(min, max) do
+		# return list of odd numbers between min and max
+		case rem(min, 2) === 0 do true -> min + 1; false -> min end
+		|> :lists.seq(max, 2)
+	end
 
 	@spec sweep([integer], integer, integer) :: [integer]
 	defp sweep(potential_primes, p, n) do
