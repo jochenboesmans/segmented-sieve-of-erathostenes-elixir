@@ -47,6 +47,6 @@ defmodule SieveOfEratosthenes.TimeTest do
 		segmented_n2_finish = :os.system_time(:millisecond)
 		segmented_n2_time = segmented_n2_finish - segmented_n2_start
 
-		assert regular_n2_time / regular_n1_time > segmented_n2_time / segmented_10_000_time
+		assert regular_n2_time / regular_n1_time > segmented_n2_time / segmented_n1_time
 	end
 end
