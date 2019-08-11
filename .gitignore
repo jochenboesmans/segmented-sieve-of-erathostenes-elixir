@@ -1,0 +1,9 @@
+/_build/
+/cover/
+/deps/
+/doc/
+/.idea/
+/.fetch
+erl_crash.dump
+*.ez
+segmented_sieve_of_erathostenes-*.tar
